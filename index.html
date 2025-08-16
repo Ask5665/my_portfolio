@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ankit • Pirate of Tech — Sailing the Code Seas</title>
+  <meta name="description" content="Ankit — Pirate of Tech. A cinematic portfolio with an animated tech-ocean, a cyber ship, and islands of Python, Java, JavaScript, HTML, CSS, and SQL.">
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="icon" href="https://fav.farm/⚓" />
+
+  <!-- TailwindCSS Play CDN (no build tools needed) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial']
+          },
+          colors: {
+            ocean: '#0ea5e9',
+            fog: '#94a3b8',
+            neon: '#22d3ee',
+            islePython: '#3776AB',
+            isleJava: '#f97316',
+            isleJS: '#facc15',
+            isleHTML: '#ef4444',
+            isleCSS: '#3b82f6',
+            isleSQL: '#10b981'
+          },
+          keyframes: {
+            floaty: { '0%,100%': { transform:'translateY(0)'}, '50%': { transform:'translateY(-8px)'} },
+            bob: { '0%,100%': { transform:'translateY(0)'}, '50%': { transform:'translateY(6px)'} },
+            shimmer: { '0%':{backgroundPosition:'0% 50%'}, '100%':{backgroundPosition:'200% 50%'} }
+          },
+                     animation: {
+             floaty: 'floaty 6s ease-in-out infinite',
+             bob: 'bob 3.5s ease-in-out infinite',
+             shimmer: 'shimmer 18s linear infinite',
+             'animate-shimmer': 'shimmer 18s linear infinite',
+             'animate-bob': 'bob 3.5s ease-in-out infinite'
+           },
+          boxShadow: {
+            glow: '0 0 0 3px rgba(14,165,233,.25)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --ring: rgba(255,255,255,.08);
+      --bg: #020617;
+      --glass: rgba(255,255,255,.05);
+      --text: #e2e8f0;
+    }
+    html { scroll-behavior: smooth; }
+    ::selection { background: #0ea5e9; color: white; }
+    body { background: radial-gradient(1200px 600px at 70% -10%, rgba(34,211,238,.12), transparent 40%), var(--bg); color: var(--text); }
+
+    /* Skip link */
+    .skip { position: absolute; left: -999px; top: -999px; }
+    .skip:focus { left: 1rem; top: 1rem; z-index: 50; background:#fff; color:#0f172a; padding:.5rem .75rem; border-radius:.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+
+    /* Cinematic background layers */
+    .bg-scene { position: fixed; inset: 0; z-index: -2; overflow: hidden; }
+    #oceanCanvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .stars { position:absolute; inset:0; background:
+      radial-gradient(2px 2px at 20% 30%, #e2e8f0 60%, transparent),
+      radial-gradient(2px 2px at 80% 20%, #cbd5e1 60%, transparent),
+      radial-gradient(1.5px 1.5px at 60% 70%, #94a3b8 60%, transparent),
+      radial-gradient(1.5px 1.5px at 30% 80%, #64748b 60%, transparent);
+      opacity:.35; pointer-events:none; }
+    .haze { position:absolute; inset:-10% -10% 0 -10%; background: radial-gradient(60% 40% at 50% -10%, rgba(255,255,255,.06), transparent 60%); filter: blur(20px); }
+
+    /* Ship & islands (SVG overlay) */
+    .scene-overlay { position: fixed; inset:0; z-index:-1; pointer-events:none; }
+    .land-label {
+      font: 600 12px/1 Inter, system-ui, -apple-system;
+      fill: #e2e8f0; letter-spacing:.5px;
+      text-shadow: 0 1px 4px rgba(0,0,0,.6);
+      text-anchor: start; dominant-baseline: middle;
+    }
+
+    /* Glassy card look */
+    .glass {
+      backdrop-filter: blur(8px);
+      background: var(--glass);
+      border: 1px solid var(--ring);
+    }
+
+    /* Reduced motion helper */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-floaty, .animate-bob { animation: none !important; }
+      .scene-overlay, #oceanCanvas { display: none !important; }
+    }
+  </style>
+</head>
+<body class="text-slate-100 font-display">
+  <a href="#home" class="skip">Skip to content</a>
+
+  <!-- Cinematic animated background -->
+  <div class="bg-scene" aria-hidden="true">
+    <canvas id="oceanCanvas"></canvas>
+    <div class="stars"></div>
+    <div class="haze"></div>
+
+    <!-- SVG overlay: ship + islands -->
+    <svg class="scene-overlay" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <!-- Islands -->
+      <g opacity="0.9">
+        <!-- Python -->
+        <g transform="translate(720,480)">
+          <ellipse rx="95" ry="26" fill="rgba(55,118,171,.18)" />
+          <circle r="44" cy="-12" fill="rgba(55,118,171,.65)" />
+          <text class="land-label" x="-36" y="-18">Python Land</text>
+        </g>
+
+        <!-- SQL -->
+        <g transform="translate(920,395)">
+          <ellipse rx="90" ry="24" fill="rgba(16,185,129,.18)" />
+          <circle r="40" cy="-12" fill="rgba(16,185,129,.65)" />
+          <text class="land-label" x="-28" y="-18">SQL Land</text>
+        </g>
+
+        <!-- CSS -->
+        <g transform="translate(620,360)">
+          <ellipse rx="95" ry="24" fill="rgba(59,130,246,.18)" />
+          <circle r="42" cy="-12" fill="rgba(59,130,246,.65)" />
+          <text class="land-label" x="-30" y="-18">CSS Land</text>
+        </g>
+
+        <!-- Java -->
+        <g transform="translate(160,430)">
+          <ellipse rx="110" ry="28" fill="rgba(249,115,22,.18)" />
+          <circle r="48" cy="-14" fill="rgba(249,115,22,.65)" />
+          <text class="land-label" x="-34" y="-20">Java Land</text>
+        </g>
+
+        <!-- JavaScript -->
+        <g transform="translate(500,480)">
+          <ellipse rx="92" ry="24" fill="rgba(250,204,21,.18)" />
+          <circle r="40" cy="-10" fill="rgba(250,204,21,.7)" />
+          <text class="land-label" x="-34" y="-16">JavaScript Land</text>
+        </g>
+
+        <!-- HTML -->
+        <g transform="translate(359,380)">
+          <ellipse rx="84" ry="22" fill="rgba(239,68,68,.18)" />
+          <circle r="36" cy="-10" fill="rgba(239,68,68,.65)" />
+          <text class="land-label" x="-30" y="-16">HTML Land</text>
+        </g>
+      </g>
+
+      <!-- Tech pirate ship -->
+      <g id="ship" transform="translate(100,360)">
+        <g class="ship-body" filter="url(#shipShadow)">
+          <path d="M0 0 L120 0 L100 22 L20 22 Z" fill="rgba(14,165,233,.85)" stroke="rgba(226,232,240,.6)" stroke-width="1" />
+          <rect x="58" y="-42" width="4" height="42" fill="#cbd5e1" />
+          <polygon points="62,-42 62,-8 98,-24" fill="rgba(34,211,238,.7)" />
+          <polygon points="58,-42 58,-14 24,-30" fill="rgba(99,102,241,.6)" />
+          <circle cx="20" cy="10" r="4" fill="#0ea5e9" />
+          <circle cx="40" cy="10" r="4" fill="#0ea5e9" />
+          <circle cx="60" cy="10" r="4" fill="#0ea5e9" />
+          <circle cx="80" cy="10" r="4" fill="#0ea5e9" />
+        </g>
+      </g>
+
+      <defs>
+        <filter id="shipShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0ea5e9" flood-opacity=".35" />
+        </filter>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-slate-950/95 supports-[backdrop-filter]:bg-slate-950/95">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
+      <a href="#home" class="flex items-center gap-2 group">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ocean/20 ring-1 ring-ocean/40 animate-floaty">
+          <i data-lucide="anchor" class="w-5 h-5" aria-hidden="true"></i>
+        </span>
+        <span class="font-semibold tracking-wide">Ankit • Pirate of Tech</span>
+      </a>
+
+             <nav class="ml-auto hidden md:flex gap-6 text-sm text-slate-300" aria-label="Primary">
+         <a class="hover:text-white" href="#lands">Lands</a>
+         <a class="hover:text-white" href="#projects">Projects</a>
+         <a class="hover:text-white" href="#skills">Skills</a>
+         <a class="hover:text-white" href="#experience">Experience</a>
+         <a class="hover:text-white" href="#contact">Contact</a>
+       </nav>
+
+       <!-- Mobile menu button -->
+       <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-white/5 transition-colors" aria-label="Toggle mobile menu">
+         <i data-lucide="menu" class="w-5 h-5" aria-hidden="true"></i>
+       </button>
+
+             <div class="ml-auto md:ml-0 flex items-center gap-2">
+         <!-- Social Media Links -->
+         <div class="hidden md:flex items-center gap-3 mr-4">
+           <a href="https://github.com/Ask5665" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg hover:bg-white/5 transition-colors" title="GitHub Profile">
+             <i data-lucide="github" class="w-5 h-5 text-slate-300 hover:text-white" aria-hidden="true"></i>
+           </a>
+           <a href="https://www.linkedin.com/in/ankit-kamanalli-36565527a/" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg hover:bg-white/5 transition-colors" title="LinkedIn Profile">
+             <i data-lucide="linkedin" class="w-5 h-5 text-slate-300 hover:text-white" aria-hidden="true"></i>
+           </a>
+         </div>
+         <a href="Ankit_resume.pdf" class="rounded-xl bg-ocean hover:bg-sky-400 text-slate-900 font-semibold px-3 py-2 text-sm">Download Résumé</a>
+       </div>
+    </div>
+     </header>
+
+   <!-- Mobile Menu Overlay -->
+   <div id="mobileMenu" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur md:hidden transform translate-x-full transition-transform duration-300 ease-in-out">
+     <div class="flex flex-col h-full">
+       <!-- Mobile menu header -->
+       <div class="flex items-center justify-between p-4 border-b border-white/10">
+         <span class="font-semibold text-lg">Menu</span>
+         <button id="closeMobileMenu" class="p-2 rounded-lg hover:bg-white/5 transition-colors" aria-label="Close mobile menu">
+           <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
+         </button>
+       </div>
+       
+       <!-- Mobile navigation -->
+       <nav class="flex-1 p-4 space-y-4">
+         <a href="#lands" class="block py-3 px-4 rounded-lg hover:bg-white/5 transition-colors text-lg font-medium">Lands</a>
+         <a href="#projects" class="block py-3 px-4 rounded-lg hover:bg-white/5 transition-colors text-lg font-medium">Projects</a>
+         <a href="#skills" class="block py-3 px-4 rounded-lg hover:bg-white/5 transition-colors text-lg font-medium">Skills</a>
+         <a href="#experience" class="block py-3 px-4 rounded-lg hover:bg-white/5 transition-colors text-lg font-medium">Experience</a>
+         <a href="#contact" class="block py-3 px-4 rounded-lg hover:bg-white/5 transition-colors text-lg font-medium">Contact</a>
+       </nav>
+       
+                <!-- Mobile menu footer -->
+         <div class="p-4 border-t border-white/10 space-y-4">
+           <!-- Mobile Social Links -->
+           <div class="flex justify-center gap-4">
+             <a href="https://github.com/Ask5665" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg hover:bg-white/5 transition-colors" title="GitHub Profile">
+               <i data-lucide="github" class="w-6 h-6 text-slate-300" aria-hidden="true"></i>
+             </a>
+             <a href="https://www.linkedin.com/in/ankit-kamanalli-36565527a/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg hover:bg-white/5 transition-colors" title="LinkedIn Profile">
+               <i data-lucide="linkedin" class="w-6 h-6 text-slate-300" aria-hidden="true"></i>
+             </a>
+           </div>
+           <a href="Ankit_resume.pdf" class="block w-full text-center rounded-xl bg-ocean hover:bg-sky-400 text-slate-900 font-semibold px-4 py-3 transition-colors">Download Résumé</a>
+         </div>
+     </div>
+   </div>
+
+   <!-- Enhanced Hero with loading animation -->
+  <section id="home" class="min-h-screen grid place-items-center text-center px-6">
+    <div class="max-w-3xl loading -mt-32">
+             <div class="inline-flex items-center gap-2 rounded-full border border-ocean/40 bg-ocean/10 px-3 py-1 text-xs text-sky-300 mb-4 animate-shimmer">
+         <i data-lucide="ship" class="w-4 h-4 animate-bob" aria-hidden="true"></i>
+         <span>Passionate Developer • Learning Java, Python & Web Development</span>
+       </div>
+
+       <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
+         Building <span class="text-ocean bg-gradient-to-r from-ocean to-sky-400 bg-clip-text text-transparent">Digital Dreams</span>
+       </h1>
+
+       <p class="mt-4 text-slate-300">
+         A passionate developer's journey through the world of programming. Explore my projects, learn about my skills, and discover how I'm growing in the exciting field of software development.
+       </p>
+
+             <div class="mt-6 flex items-center justify-center gap-3">
+         <a href="#lands" class="rounded-xl bg-white text-slate-900 font-semibold px-4 py-2 shadow hover:shadow-glow">Explore My Skills</a>
+         <a href="#projects" class="rounded-xl border border-white/15 px-4 py-2 hover:bg-white/5">See My Work</a>
+       </div>
+    </div>
+  </section>
+
+  <!-- Lands (cards themed as islands) -->
+  <section id="lands" class="py-24">
+    <div class="max-w-6xl mx-auto px-4">
+             <h2 class="text-2xl md:text-3xl font-bold mb-8">My Programming Journey</h2>
+
+      <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <!-- Python -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-1 rounded-full" style="background:rgba(55,118,171,.2);color:#bcd7f1;border:1px solid rgba(55,118,171,.4)">PYTHON</span>
+            <i data-lucide="snake" class="w-5 h-5" style="color:#bcd7f1" aria-hidden="true"></i>
+          </div>
+                     <h3 class="font-semibold text-lg mt-2">Automation & Data</h3>
+           <p class="text-sm text-slate-300 mt-2">Creating helpful scripts, building simple APIs, and learning data handling.</p>
+        </article>
+
+        <!-- Java -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-1 rounded-full" style="background:rgba(249,115,22,.2);color:#ffd7be;border:1px solid rgba(249,115,22,.4)">JAVA</span>
+            <i data-lucide="cup-soda" class="w-5 h-5" style="color:#ffd7be" aria-hidden="true"></i>
+          </div>
+                     <h3 class="font-semibold text-lg mt-2">Backend & OOP</h3>
+           <p class="text-sm text-slate-300 mt-2">Learning Java fundamentals, exploring Spring framework, and building web services.</p>
+        </article>
+
+        <!-- JavaScript -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-1 rounded-full" style="background:rgba(250,204,21,.2);color:#fff1a1;border:1px solid rgba(250,204,21,.4)">JAVASCRIPT</span>
+            <i data-lucide="bolt" class="w-5 h-5" style="color:#fff1a1" aria-hidden="true"></i>
+          </div>
+                     <h3 class="font-semibold text-lg mt-2">Interactive Web</h3>
+           <p class="text-sm text-slate-300 mt-2">Making websites come alive with JavaScript, creating engaging user experiences.</p>
+        </article>
+
+        <!-- HTML -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-1 rounded-full" style="background:rgba(239,68,68,.2);color:#fecaca;border:1px solid rgba(239,68,68,.4)">HTML</span>
+            <i data-lucide="braces" class="w-5 h-5" style="color:#fecaca" aria-hidden="true"></i>
+          </div>
+                     <h3 class="font-semibold text-lg mt-2">Semantic Structure</h3>
+           <p class="text-sm text-slate-300 mt-2">Building well-organized websites that are easy to understand and navigate.</p>
+        </article>
+
+        <!-- CSS -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-1 rounded-full" style="background:rgba(59,130,246,.2);color:#cfe2ff;border:1px solid rgba(59,130,246,.4)">CSS</span>
+            <i data-lucide="palette" class="w-5 h-5" style="color:#cfe2ff" aria-hidden="true"></i>
+          </div>
+                     <h3 class="font-semibold text-lg mt-2">Design Systems</h3>
+           <p class="text-sm text-slate-300 mt-2">Creating beautiful, responsive layouts with modern CSS and Tailwind framework.</p>
+        </article>
+
+        <!-- SQL -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-1 rounded-full" style="background:rgba(16,185,129,.2);color:#d1fae5;border:1px solid rgba(16,185,129,.4)">SQL</span>
+            <i data-lucide="database" class="w-5 h-5" style="color:#d1fae5" aria-hidden="true"></i>
+          </div>
+                     <h3 class="font-semibold text-lg mt-2">Data Models</h3>
+           <p class="text-sm text-slate-300 mt-2">Learning database design, writing SQL queries, and understanding data relationships.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="py-16 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center justify-between mb-8">
+                 <h2 class="text-2xl md:text-3xl font-bold">My Learning Projects</h2>
+                 <a href="https://github.com/Ask5665?tab=repositories" class="text-sky-300 hover:text-white text-sm">See all →</a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Project 1 -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs px-2 py-1 rounded-full bg-ocean/20 text-sky-200 ring-1 ring-ocean/40">Python • API</span>
+            <i data-lucide="server-cog" class="w-5 h-5 text-sky-200" aria-hidden="true"></i>
+          </div>
+          <h3 class="font-semibold text-lg">Task Automator & Dashboard</h3>
+                     <p class="mt-2 text-sm text-slate-300">A simple task management tool with a web dashboard. Learning how to build APIs and create user interfaces.</p>
+          <ul class="mt-3 text-xs text-slate-400 list-disc pl-5 space-y-1">
+            <li>FastAPI, SQLite, JWT auth</li>
+            <li>Charts via canvas, Tailwind UI</li>
+          </ul>
+          <div class="mt-4 flex items-center gap-3 text-sm">
+            <a class="underline underline-offset-4" href="#">Live Demo</a>
+            <a class="underline underline-offset-4" href="#">Source</a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs px-2 py-1 rounded-full bg-amber-400/20 text-amber-200 ring-1 ring-amber-300/40">JavaScript</span>
+            <i data-lucide="sparkles" class="w-5 h-5 text-amber-200" aria-hidden="true"></i>
+          </div>
+          <h3 class="font-semibold text-lg">Travel Agency Website</h3>
+                     <p class="mt-2 text-sm text-slate-300">A travel website built with modern web technologies. Focused on making it accessible and user-friendly.</p>
+          <div class="mt-4 flex items-center gap-3 text-sm">
+            <a class="underline underline-offset-4" href="#">Live Demo</a>
+            <a class="underline underline-offset-4" href="#">Source</a>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="glass rounded-2xl p-5 hover:bg-white/10 transition group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs px-2 py-1 rounded-full bg-emerald-400/20 text-emerald-200 ring-1 ring-emerald-300/40">IoT • Arduino</span>
+            <i data-lucide="navigation" class="w-5 h-5 text-emerald-200" aria-hidden="true"></i>
+          </div>
+          <h3 class="font-semibold text-lg">Vehicle Tracking using Arduino Cloud</h3>
+                     <p class="mt-2 text-sm text-slate-300">An IoT project that tracks vehicle locations using Arduino and cloud services. Learning about embedded systems and real-time data.</p>
+          <div class="mt-4 flex items-center gap-3 text-sm">
+            <a class="underline underline-offset-4" href="#">Live Demo</a>
+            <a class="underline underline-offset-4" href="https://github.com/Ask5665">Source</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="py-16 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4">
+             <h2 class="text-2xl md:text-3xl font-bold mb-6">My Learning Progress</h2>
+
+             <div class="grid md:grid-cols-3 gap-6">
+         <div class="glass rounded-2xl p-5">
+           <h3 class="font-semibold mb-3 flex items-center gap-2">
+             <i data-lucide="code-2" aria-hidden="true"></i> Core
+           </h3>
+           <div class="space-y-3">
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">Java (Core)</span>
+                 <span class="text-sky-300">90%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-orange-500 to-orange-400 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 90%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">Python</span>
+                 <span class="text-sky-300">85%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-blue-600 to-blue-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 85%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">JavaScript</span>
+                 <span class="text-sky-300">80%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-yellow-500 to-yellow-400 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 80%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">HTML5 & CSS3</span>
+                 <span class="text-sky-300">95%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-red-500 to-pink-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 95%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">SQL</span>
+                 <span class="text-sky-300">75%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-green-500 to-emerald-400 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 75%"></div>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="glass rounded-2xl p-5">
+           <h3 class="font-semibold mb-3 flex items-center gap-2">
+             <i data-lucide="settings" aria-hidden="true"></i> Frameworks
+           </h3>
+           <div class="space-y-3">
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">Spring (basic)</span>
+                 <span class="text-sky-300">70%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-green-600 to-green-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 70%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">Node.js</span>
+                 <span class="text-sky-300">65%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 65%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">RESTful APIs</span>
+                 <span class="text-sky-300">80%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 80%"></div>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="glass rounded-2xl p-5">
+           <h3 class="font-semibold mb-3 flex items-center gap-2">
+             <i data-lucide="layout-dashboard" aria-hidden="true"></i> Tooling
+           </h3>
+           <div class="space-y-3">
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">VS Code</span>
+                 <span class="text-sky-300">90%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-blue-600 to-blue-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 90%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">Eclipse</span>
+                 <span class="text-sky-300">75%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-purple-600 to-purple-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 75%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">Git/GitHub</span>
+                 <span class="text-sky-300">85%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 85%"></div>
+               </div>
+             </div>
+             <div>
+               <div class="flex justify-between text-sm mb-1">
+                 <span class="text-slate-300">Linux (basic)</span>
+                 <span class="text-sky-300">70%</span>
+               </div>
+               <div class="w-full bg-slate-700 rounded-full h-2">
+                 <div class="bg-gradient-to-r from-yellow-600 to-yellow-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: 70%"></div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+    </div>
+  </section>
+
+  <!-- Enhanced Experience section -->
+  <section id="experience" class="py-16 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4">
+             <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">My Learning Journey</h2>
+
+      <div class="relative">
+        <!-- Timeline line -->
+        <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-ocean to-transparent"></div>
+        
+        <div class="space-y-8">
+          <!-- Experience 1 -->
+          <div class="relative flex items-start md:justify-center">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-3 h-3 bg-ocean rounded-full ring-4 ring-slate-900"></div>
+            <div class="ml-10 md:ml-0 md:w-1/2 md:pr-8 loading">
+              <div class="glass rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-semibold text-lg">Full Stack Java Trainee</h3>
+                  <span class="text-xs px-2 py-1 rounded-full bg-ocean/20 text-sky-200">Current</span>
+                </div>
+                <p class="text-sm text-ocean font-medium mb-2">TAP Academy</p>
+                <p class="text-xs text-slate-400 mb-3">Jul 2024 – Present</p>
+                                 <p class="text-sm text-slate-300">Currently learning Java programming, web development with HTML/CSS, Spring framework basics, and how to work with databases. Building simple web applications to practice my skills.</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="text-xs px-2 py-1 rounded-full bg-orange-500/20 text-orange-200">Java</span>
+                  <span class="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-200">Spring Boot</span>
+                  <span class="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-200">SQL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience 2 -->
+          <div class="relative flex items-start md:justify-center">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-3 h-3 bg-slate-600 rounded-full ring-4 ring-slate-900"></div>
+            <div class="ml-10 md:ml-0 md:w-1/2 md:pl-8 md:ml-auto loading">
+              <div class="glass rounded-2xl p-6">
+                <h3 class="font-semibold text-lg mb-2">IoT Development Intern</h3>
+                <p class="text-sm text-ocean font-medium mb-2">Govt. Tool Room & Training Center</p>
+                <p class="text-xs text-slate-400 mb-3">Nov 2023 – Jan 2024</p>
+                                 <p class="text-sm text-slate-300">Worked on exciting IoT projects including a smart parking system and a line-following robot. Learned to use ESP32 microcontrollers and Arduino Cloud for data collection and remote monitoring.</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="text-xs px-2 py-1 rounded-full bg-amber-500/20 text-amber-200">ESP32</span>
+                  <span class="text-xs px-2 py-1 rounded-full bg-cyan-500/20 text-cyan-200">IoT</span>
+                  <span class="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-200">Arduino</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience 3 -->
+          <div class="relative flex items-start md:justify-center">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-3 h-3 bg-slate-600 rounded-full ring-4 ring-slate-900"></div>
+            <div class="ml-10 md:ml-0 md:w-1/2 md:pr-8 loading">
+              <div class="glass rounded-2xl p-6">
+                <h3 class="font-semibold text-lg mb-2">Content & Social Media Strategy Intern</h3>
+                <p class="text-sm text-ocean font-medium mb-2">Chamberly</p>
+                <p class="text-xs text-slate-400 mb-3">May 2024 – Jul 2024</p>
+                                 <p class="text-sm text-slate-300">Created engaging visual content and social media strategies. Successfully increased audience engagement by about 30% through creative and thoughtful content planning.</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-200">Content Strategy</span>
+                  <span class="text-xs px-2 py-1 rounded-full bg-pink-500/20 text-pink-200">Social Media</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6">Contact</h2>
+
+      <div class="glass rounded-2xl p-6 grid md:grid-cols-2 gap-6">
+        <div>
+          <p class="text-slate-300">Let’s collaborate on bold ideas. I’m available for full-time roles, internships, and impactful projects.</p>
+                     <ul class="mt-4 text-sm text-slate-300 space-y-2">
+             <li class="flex items-center gap-2">
+               <i data-lucide="mail" aria-hidden="true"></i>
+               <a class="underline" href="mailto:ankitkamanalli230@gmail.com">ankitkamanalli230@gmail.com</a>
+             </li>
+             <li class="flex items-center gap-2">
+               <i data-lucide="phone" aria-hidden="true"></i>
+               <a href="tel:+919019537322">+91 90195 37322</a>
+             </li>
+             <li class="flex items-center gap-2">
+               <i data-lucide="map-pin" aria-hidden="true"></i>
+               Kalaburagi, Karnataka, India
+             </li>
+             <li class="flex items-center gap-2">
+               <i data-lucide="github" aria-hidden="true"></i>
+               <a class="underline" href="https://github.com/Ask5665" target="_blank" rel="noopener noreferrer">github.com/Ask5665</a>
+             </li>
+             <li class="flex items-center gap-2">
+               <i data-lucide="linkedin" aria-hidden="true"></i>
+               <a class="underline" href="https://www.linkedin.com/in/ankit-kamanalli-36565527a/" target="_blank" rel="noopener noreferrer">linkedin.com/in/ankit-kamanalli</a>
+             </li>
+           </ul>
+        </div>
+
+        <form class="space-y-3" onsubmit="event.preventDefault(); alert('Thanks! Your message has been noted.'); this.reset();" aria-label="Contact form">
+          <div>
+            <label for="name" class="block text-sm mb-1">Name</label>
+            <input id="name" name="name" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2" required />
+          </div>
+          <div>
+            <label for="email" class="block text-sm mb-1">Email</label>
+            <input id="email" name="email" type="email" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2" required />
+          </div>
+          <div>
+            <label for="message" class="block text-sm mb-1">Message</label>
+            <textarea id="message" name="message" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2" rows="4" required></textarea>
+          </div>
+          <button class="rounded-xl bg-ocean hover:bg-sky-400 text-slate-900 font-semibold px-4 py-2">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-10 border-t border-white/5 text-center text-sm text-slate-400">
+         <p>© <span id="year"></span> Ankit • Learning Developer. All rights reserved.</p>
+  </footer>
+
+  <script>
+         // Init year & icons when DOM is ready
+     document.addEventListener('DOMContentLoaded', () => {
+       document.getElementById('year').textContent = new Date().getFullYear();
+       if (window.lucide) lucide.createIcons();
+       
+       // Mobile menu functionality
+       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+       const mobileMenu = document.getElementById('mobileMenu');
+       const closeMobileMenu = document.getElementById('closeMobileMenu');
+       
+       function openMobileMenu() {
+         mobileMenu.classList.remove('translate-x-full');
+         mobileMenu.classList.add('translate-x-0');
+         document.body.style.overflow = 'hidden';
+       }
+       
+       function closeMobileMenuFunc() {
+         mobileMenu.classList.add('translate-x-full');
+         mobileMenu.classList.remove('translate-x-0');
+         document.body.style.overflow = '';
+       }
+       
+       mobileMenuBtn.addEventListener('click', openMobileMenu);
+       closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+       
+       // Close menu when clicking on navigation links
+       const mobileNavLinks = mobileMenu.querySelectorAll('nav a');
+       mobileNavLinks.forEach(link => {
+         link.addEventListener('click', closeMobileMenuFunc);
+       });
+       
+       // Close menu when clicking outside
+       mobileMenu.addEventListener('click', (e) => {
+         if (e.target === mobileMenu) {
+           closeMobileMenuFunc();
+         }
+       });
+       
+       // Close menu on escape key
+       document.addEventListener('keydown', (e) => {
+         if (e.key === 'Escape' && !mobileMenu.classList.contains('translate-x-full')) {
+           closeMobileMenuFunc();
+         }
+       });
+     });
+
+    // === OCEAN OF CODE ANIMATION ===
+    const canvas = document.getElementById('oceanCanvas');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let w, h, dpr, t = 0;
+    let paused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Characters include programming hints
+    const codeChars = ('{}<>[]()#@$%&=+*01 PYTHON JAVA JS HTML CSS SQL').split('');
+    const droplets = [];
+
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.width = Math.floor(innerWidth * dpr);
+      h = canvas.height = Math.floor(innerHeight * dpr);
+      canvas.style.width = innerWidth + 'px';
+      canvas.style.height = innerHeight + 'px';
+    }
+    window.addEventListener('resize', resize, { passive:true });
+    resize();
+
+    function spawnDroplet(){
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        amp: 8 + Math.random() * 18,
+        speed: 0.002 + Math.random() * 0.003,
+        size: 10 + Math.random() * 14,
+        char: codeChars[(Math.random()*codeChars.length) | 0],
+        hue: 190 + Math.random()*70,
+        drift: Math.random()*Math.PI*2
+      };
+    }
+
+    for (let i=0; i<200; i++) droplets.push(spawnDroplet());
+
+    // Ship autopilot
+    const ship = document.getElementById('ship');
+
+    // Subtle lightning flash
+    let flash = 0;
+
+    function animate(){
+      if (paused) return;
+
+      t += 1;
+      ctx.clearRect(0,0,w,h);
+
+      // Day/night tint
+      const cycle = (Math.sin(t*0.002) + 1) / 2; // 0..1
+      const top = `rgba(${2 + Math.floor(40*cycle)},${6 + Math.floor(60*cycle)},${23 + Math.floor(100*cycle)},1)`;
+      const mid = `rgba(2,6,23,${0.4 + 0.3*cycle})`;
+      const bottom = `rgba(14,165,233,${0.18 + 0.08*cycle})`;
+
+      const g = ctx.createLinearGradient(0,0,0,h);
+      g.addColorStop(0, top);
+      g.addColorStop(0.45, mid);
+      g.addColorStop(1, bottom);
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+
+      // occasional flash
+      if (Math.random() < 0.0015) flash = 1;
+      if (flash > 0) {
+        ctx.fillStyle = `rgba(255,255,255,${flash * 0.08})`;
+        ctx.fillRect(0,0,w,h);
+        flash *= 0.92;
+      }
+
+      // sine bands (ocean swell)
+      for (let band=0; band<3; band++){
+        const yBase = h*0.65 + band*14;
+        ctx.beginPath();
+        for (let x=0; x<=w; x+=3){
+          const y = yBase
+            + Math.sin((x*0.008)+(t*0.02+band))*6
+            + Math.sin((x*0.003)-(t*0.015))*4;
+          if (x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.lineTo(w,h); ctx.lineTo(0,h); ctx.closePath();
+        ctx.fillStyle = `rgba(14,165,233,${0.06 + band*0.05})`;
+        ctx.fill();
+      }
+
+      // code droplets = shimmering letters forming the water texture
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (const d of droplets){
+        const y = d.y + Math.sin((t*d.speed) + (d.x*0.003)) * d.amp;
+        const x = d.x + Math.cos((t*d.speed*0.8) + (d.y*0.003) + d.drift) * 6;
+        ctx.font = `${d.size}px monospace`;
+        ctx.fillStyle = `hsla(${d.hue}, 90%, ${60 + 10*Math.sin(t*0.01)}%, 0.25)`;
+        ctx.fillText(d.char, x, y);
+      }
+
+             // move ship along a lazy curve towards the right
+       const shipX = 100 + (t*0.1) % 900; // loop across (slower)
+       const shipY = 360 + Math.sin(t*0.02)*6;
+      ship.setAttribute('transform', `translate(${shipX},${shipY})`);
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Pause on tab blur (battery friendly)
+    document.addEventListener('visibilitychange', () => {
+      paused = document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!paused) requestAnimationFrame(animate);
+    }, { passive:true });
+
+    // Touch to reduce motion on mobile if user taps logo rapidly (easter egg safety)
+    (function motionGuard(){
+      let taps = 0, timer;
+      document.addEventListener('touchend', (e) => {
+        const anchor = e.target.closest('a[href="#home"]');
+        if (!anchor) return;
+        taps++;
+        clearTimeout(timer);
+        timer = setTimeout(() => taps = 0, 700);
+        if (taps >= 3) {
+          paused = true;
+          canvas.style.display = 'none';
+          document.querySelector('.scene-overlay')?.setAttribute('hidden', 'true');
+          alert('Reduced motion enabled.');
+        }
+      }, { passive:true });
+    })();
+  </script>
+</body>
+</html>
