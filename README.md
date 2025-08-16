@@ -1,6 +1,8 @@
 <!-- Repo Description (350 chars) -->
 🚀 My cinematic portfolio — an animated ocean of code with a cyber-ship and skill islands. Showcasing AI, Web, and IoT projects like ECG AI, Travel Agency, and Arduino Bus Tracking. Built with HTML, TailwindCSS, and JS for smooth animations, responsive layout, and an immersive, story-driven design.
 
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=ankit123.my-project)
+
 # 🌊 Pirate of Tech — My Portfolio
 
 [![HTML](https://img.shields.io/badge/HTML-5-orange?logo=html5)]()
