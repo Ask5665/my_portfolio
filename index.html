@@ -211,7 +211,7 @@
              <i data-lucide="linkedin" class="w-5 h-5 text-slate-300 hover:text-white" aria-hidden="true"></i>
            </a>
          </div>
-         <a href="https://github.com/Ask5665/my_portfolio/blob/main/Ankit_resume.pdf" class="rounded-xl bg-ocean hover:bg-sky-400 text-slate-900 font-semibold px-3 py-2 text-sm">Download Résumé</a>
+         <a href="Ankit_resume.pdf" class="rounded-xl bg-ocean hover:bg-sky-400 text-slate-900 font-semibold px-3 py-2 text-sm">Download Résumé</a>
        </div>
     </div>
      </header>
@@ -617,48 +617,78 @@
   <section id="contact" class="py-16 border-t border-white/5">
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-2xl md:text-3xl font-bold mb-6">Contact</h2>
+      
+      <div class="text-center mb-8">
+        <p class="text-slate-300 max-w-2xl mx-auto">
+          Ready to start a conversation? Fill out the form below and I'll get back to you within 24 hours. 
+          You can also reach me directly through any of the contact methods listed.
+        </p>
+      </div>
 
       <div class="glass rounded-2xl p-6 grid md:grid-cols-2 gap-6">
         <div>
-          <p class="text-slate-300">Let’s collaborate on bold ideas. I’m available for full-time roles, internships, and impactful projects.</p>
-                     <ul class="mt-4 text-sm text-slate-300 space-y-2">
-             <li class="flex items-center gap-2">
-               <i data-lucide="mail" aria-hidden="true"></i>
-               <a class="underline" href="mailto:ankitkamanalli230@gmail.com">ankitkamanalli230@gmail.com</a>
-             </li>
-             <li class="flex items-center gap-2">
-               <i data-lucide="phone" aria-hidden="true"></i>
-               <a href="tel:+919019537322">+91 90195 37322</a>
-             </li>
-             <li class="flex items-center gap-2">
-               <i data-lucide="map-pin" aria-hidden="true"></i>
-               Kalaburagi, Karnataka, India
-             </li>
-             <li class="flex items-center gap-2">
-               <i data-lucide="github" aria-hidden="true"></i>
-               <a class="underline" href="https://github.com/Ask5665" target="_blank" rel="noopener noreferrer">github.com/Ask5665</a>
-             </li>
-             <li class="flex items-center gap-2">
-               <i data-lucide="linkedin" aria-hidden="true"></i>
-               <a class="underline" href="https://www.linkedin.com/in/ankit-kamanalli-36565527a/" target="_blank" rel="noopener noreferrer">linkedin.com/in/ankit-kamanalli</a>
-             </li>
-           </ul>
+          <p class="text-slate-300 mb-4">I'm excited to connect with fellow developers, potential employers, and anyone interested in technology! Whether you have a project idea, want to collaborate, or just want to say hello, feel free to reach out.</p>
+          
+          <div class="bg-ocean/10 border border-ocean/20 rounded-lg p-4 mb-4">
+            <h3 class="font-semibold text-ocean mb-2">Quick Contact Options:</h3>
+            <ul class="text-sm text-slate-300 space-y-1">
+              <li>• <strong>Email:</strong> Best for detailed discussions and project proposals</li>
+              <li>• <strong>LinkedIn:</strong> Great for professional networking</li>
+              <li>• <strong>GitHub:</strong> Perfect for code-related discussions</li>
+              <li>• <strong>Phone:</strong> Available for urgent matters</li>
+            </ul>
+          </div>
+          
+          <ul class="mt-4 text-sm text-slate-300 space-y-2">
+            <li class="flex items-center gap-2">
+              <i data-lucide="mail" aria-hidden="true"></i>
+              <a class="underline" href="mailto:ankitkamanalli230@gmail.com">ankitkamanalli230@gmail.com</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="phone" aria-hidden="true"></i>
+              <a href="tel:+919019537322">+91 90195 37322</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="map-pin" aria-hidden="true"></i>
+              Kalaburagi, Karnataka, India
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="github" aria-hidden="true"></i>
+              <a class="underline" href="https://github.com/Ask5665" target="_blank" rel="noopener noreferrer">github.com/Ask5665</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="linkedin" aria-hidden="true"></i>
+              <a class="underline" href="https://www.linkedin.com/in/ankit-kamanalli-36565527a/" target="_blank" rel="noopener noreferrer">linkedin.com/in/ankit-kamanalli</a>
+            </li>
+          </ul>
         </div>
 
-        <form class="space-y-3" onsubmit="event.preventDefault(); alert('Thanks! Your message has been noted.'); this.reset();" aria-label="Contact form">
+        <form class="space-y-3" action="https://formspree.io/f/ankitkamanalli230@gmail.com" method="POST" aria-label="Contact form" id="contactForm">
+          <div class="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+            <p class="text-xs text-blue-200">
+              <i data-lucide="info" class="w-3 h-3 inline mr-1" aria-hidden="true"></i>
+              This form sends messages directly to my email. I'll respond within 24 hours!
+            </p>
+          </div>
           <div>
             <label for="name" class="block text-sm mb-1">Name</label>
-            <input id="name" name="name" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2" required />
+            <input id="name" name="name" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-white placeholder-slate-400" placeholder="Your name" required />
           </div>
           <div>
             <label for="email" class="block text-sm mb-1">Email</label>
-            <input id="email" name="email" type="email" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2" required />
+            <input id="email" name="email" type="email" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-white placeholder-slate-400" placeholder="your.email@example.com" required />
           </div>
           <div>
             <label for="message" class="block text-sm mb-1">Message</label>
-            <textarea id="message" name="message" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2" rows="4" required></textarea>
+            <textarea id="message" name="message" class="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-white placeholder-slate-400" rows="4" placeholder="Tell me about your project or opportunity..." required></textarea>
           </div>
-          <button class="rounded-xl bg-ocean hover:bg-sky-400 text-slate-900 font-semibold px-4 py-2">Send</button>
+          <button type="submit" class="rounded-xl bg-ocean hover:bg-sky-400 text-slate-900 font-semibold px-4 py-2 transition-colors duration-200 flex items-center justify-center gap-2" id="submitBtn">
+            <span id="submitText">Send Message</span>
+            <i data-lucide="send" class="w-4 h-4 hidden" id="submitIcon" aria-hidden="true"></i>
+          </button>
+          
+          <!-- Success/Error Messages -->
+          <div id="formMessage" class="hidden mt-4 p-3 rounded-lg text-sm"></div>
         </form>
       </div>
     </div>
@@ -713,6 +743,66 @@
            closeMobileMenuFunc();
          }
        });
+       
+       // Contact form functionality
+       const contactForm = document.getElementById('contactForm');
+       const submitBtn = document.getElementById('submitBtn');
+       const submitText = document.getElementById('submitText');
+       const submitIcon = document.getElementById('submitIcon');
+       const formMessage = document.getElementById('formMessage');
+       
+       contactForm.addEventListener('submit', async (e) => {
+         e.preventDefault();
+         
+         // Show loading state
+         submitBtn.disabled = true;
+         submitText.textContent = 'Sending...';
+         submitIcon.classList.remove('hidden');
+         formMessage.classList.add('hidden');
+         
+         try {
+           const formData = new FormData(contactForm);
+           const response = await fetch(contactForm.action, {
+             method: 'POST',
+             body: formData,
+             headers: {
+               'Accept': 'application/json'
+             }
+           });
+           
+           if (response.ok) {
+             // Success
+             showMessage('Thank you! Your message has been sent successfully. I\'ll get back to you soon!', 'success');
+             contactForm.reset();
+           } else {
+             // Error
+             showMessage('Sorry, there was an error sending your message. Please try again or contact me directly via email.', 'error');
+           }
+         } catch (error) {
+           // Network error
+           showMessage('Network error. Please check your connection and try again.', 'error');
+         } finally {
+           // Reset button state
+           submitBtn.disabled = false;
+           submitText.textContent = 'Send Message';
+           submitIcon.classList.add('hidden');
+         }
+       });
+       
+       function showMessage(text, type) {
+         formMessage.textContent = text;
+         formMessage.className = `mt-4 p-3 rounded-lg text-sm ${
+           type === 'success' 
+             ? 'bg-green-500/20 text-green-200 border border-green-500/30' 
+             : 'bg-red-500/20 text-red-200 border border-red-500/30'
+         }`;
+         formMessage.classList.remove('hidden');
+         
+         // Auto-hide after 5 seconds
+         setTimeout(() => {
+           formMessage.classList.add('hidden');
+         }, 5000);
+       }
      });
 
     // === OCEAN OF CODE ANIMATION ===
@@ -844,4 +934,3 @@
   </script>
 </body>
 </html>
-
