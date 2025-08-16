@@ -697,6 +697,16 @@
   <footer class="py-10 border-t border-white/5 text-center text-sm text-slate-400">
          <p>© <span id="year"></span> Ankit • Learning Developer. All rights reserved.</p>
   </footer>
+   <!-- Load EmailJS library -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<!-- Initialize EmailJS -->
+<script>
+  (function(){
+    emailjs.init("4x4T71lDIWAKiyFpd"); // Your Public Key
+  })();
+</script>
+
 
   <script>
          // Init year & icons when DOM is ready
@@ -745,65 +755,41 @@
        });
        
        // Contact form functionality
-       const contactForm = document.getElementById('contactForm');
-       const submitBtn = document.getElementById('submitBtn');
-       const submitText = document.getElementById('submitText');
-       const submitIcon = document.getElementById('submitIcon');
-       const formMessage = document.getElementById('formMessage');
-       
-       contactForm.addEventListener('submit', async (e) => {
-         e.preventDefault();
-         
-         // Show loading state
-         submitBtn.disabled = true;
-         submitText.textContent = 'Sending...';
-         submitIcon.classList.remove('hidden');
-         formMessage.classList.add('hidden');
-         
-         try {
-           const formData = new FormData(contactForm);
-           const response = await fetch(contactForm.action, {
-             method: 'POST',
-             body: formData,
-             headers: {
-               'Accept': 'application/json'
-             }
-           });
-           
-           if (response.ok) {
-             // Success
-             showMessage('Thank you! Your message has been sent successfully. I\'ll get back to you soon!', 'success');
-             contactForm.reset();
-           } else {
-             // Error
-             showMessage('Sorry, there was an error sending your message. Please try again or contact me directly via email.', 'error');
-           }
-         } catch (error) {
-           // Network error
-           showMessage('Network error. Please check your connection and try again.', 'error');
-         } finally {
-           // Reset button state
-           submitBtn.disabled = false;
-           submitText.textContent = 'Send Message';
-           submitIcon.classList.add('hidden');
-         }
-       });
-       
-       function showMessage(text, type) {
-         formMessage.textContent = text;
-         formMessage.className = `mt-4 p-3 rounded-lg text-sm ${
-           type === 'success' 
-             ? 'bg-green-500/20 text-green-200 border border-green-500/30' 
-             : 'bg-red-500/20 text-red-200 border border-red-500/30'
-         }`;
-         formMessage.classList.remove('hidden');
-         
-         // Auto-hide after 5 seconds
-         setTimeout(() => {
-           formMessage.classList.add('hidden');
-         }, 5000);
-       }
-     });
+         const contactForm = document.getElementById("contactForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const submitText = document.getElementById("submitText");
+  const submitIcon = document.getElementById("submitIcon");
+  const formMessage = document.getElementById("formMessage");
+
+  contactForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    submitBtn.disabled = true;
+    submitText.textContent = "Sending...";
+    submitIcon.classList.remove("hidden");
+    formMessage.classList.add("hidden");
+
+    emailjs.sendForm("service_i3qup1l", "template_9vfw18m", contactForm)
+      .then(() => {
+        formMessage.textContent = "✅ Message sent successfully!";
+        formMessage.className = "mt-4 p-3 rounded-lg text-sm bg-green-500/20 text-green-200 border border-green-500/30";
+        formMessage.classList.remove("hidden");
+        contactForm.reset();
+      })
+      .catch((err) => {
+        formMessage.textContent = "❌ Failed to send message. Please try again.";
+        formMessage.className = "mt-4 p-3 rounded-lg text-sm bg-red-500/20 text-red-200 border border-red-500/30";
+        formMessage.classList.remove("hidden");
+        console.error("EmailJS Error:", err);
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitText.textContent = "Send Message";
+        submitIcon.classList.add("hidden");
+      });
+  });
+});
+
 
     // === OCEAN OF CODE ANIMATION ===
     const canvas = document.getElementById('oceanCanvas');
@@ -934,4 +920,5 @@
   </script>
 </body>
 </html>
+
 
