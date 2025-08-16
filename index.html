@@ -689,6 +689,8 @@
           
           <!-- Success/Error Messages -->
           <div id="formMessage" class="hidden mt-4 p-3 rounded-lg text-sm"></div>
+          <input type="hidden" name="time" value="">
+          <input type="hidden" name="date" value="">
         </form>
       </div>
     </div>
@@ -753,13 +755,20 @@
            closeMobileMenuFunc();
          }
        });
+
+       const timeField = document.querySelector('input[name="time"]');
+        const dateField = document.querySelector('input[name="date"]');
+        const now = new Date();
+        timeField.value = now.toLocaleTimeString();
+        dateField.value = now.toLocaleDateString();
+
        
        // Contact form functionality
          const contactForm = document.getElementById("contactForm");
-  const submitBtn = document.getElementById("submitBtn");
-  const submitText = document.getElementById("submitText");
-  const submitIcon = document.getElementById("submitIcon");
-  const formMessage = document.getElementById("formMessage");
+       const submitBtn = document.getElementById("submitBtn");
+      const submitText = document.getElementById("submitText");
+      const submitIcon = document.getElementById("submitIcon");
+     const formMessage = document.getElementById("formMessage");
 
   contactForm.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -920,5 +929,6 @@
   </script>
 </body>
 </html>
+
 
 
